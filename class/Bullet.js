@@ -1,8 +1,9 @@
 class Bullet {
-    constructor(x, y) {
+    constructor(x, y, direction = -1) {
         this.x = x;
         this.y = y;
         this.bulleActive = false;
+        this.direction = direction;
     }
 
     show() {
@@ -12,11 +13,11 @@ class Bullet {
     }
 
     move() {
-        this.y -= bulletSpeed;
+        this.y += bulletSpeed * this.direction;
     }
 
     offscreen() {
-        return this.y < 0;
+        return this.y < 0 || this.y > height;
     }
 
     hits(enemy) {

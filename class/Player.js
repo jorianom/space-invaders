@@ -6,9 +6,11 @@ class Player {
     }
 
     show() {
-        fill(0, 255, 0);
-        rectMode(CENTER);
-        rect(this.x, height - 40, 40, 20);
+        // fill(0, 255, 0);
+        // rectMode(CENTER);
+        // rect(this.x, height - 40, 40, 20);
+        imageMode(CENTER);
+        image(playerImg, this.x, height - 60, 80, 60);
     }
 
     setDir(dir) {

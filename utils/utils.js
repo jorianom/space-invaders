@@ -17,6 +17,17 @@ function drawBullet() {
     }
 }
 
+function drawEnemyBullet() {
+    for (let i = enemyBullet.length - 1; i >= 0; i--) {
+        let bullet = enemyBullet[i];
+        bullet.show();
+        bullet.move();
+        if (bullet.offscreen()) {
+            enemyBullet.splice(i, 1);
+        }
+    }
+}
+
 function drawEnemy() {
     // Dibuja y mueve los enemigos
     let edge = false;
@@ -25,6 +36,10 @@ function drawEnemy() {
         enemy.move();
         if (enemy.x > width - 30 || enemy.x < 30) {
             edge = true;
+        }
+        let bullet = enemy.shoot();
+        if (bullet) {
+            enemyBullet.push(bullet);
         }
     }
     if (edge) {
@@ -51,18 +66,38 @@ function gameOver() {
     for (let i = enemies.length - 1; i >= 0; i--) {
         let d = dist(player.x, height - 40, enemies[i].x, enemies[i].y);
         if (d < 20 + enemies[i].r) { // Radio de la nave + radio del enemigo
-            console.log("Colisión detectada!");
-            clearInterval(scoreInterval);
-            noLoop(); // Detiene el juego
-            textSize(32);
-            fill(255, 0, 0);
-            textAlign(CENTER);
-            text("¡Game Over!", width / 2, height / 2);
+            endGame();
+        }
+    }
+    for (let i = enemyBullet.length - 1; i >= 0; i--) {
+        let bullet = enemyBullet[i];
+        let d = dist(player.x, height - 40, bullet.x, bullet.y);
+        if (d < 20) { // Radio de la nave (20 es un estimado, ajusta según el tamaño de tu nave)
+            console.log("Colisión con bala enemiga detectada!");
+            endGame();
         }
     }
 }
 
-
+function endGame() {
+    gameOverFlag = true;
+    clearInterval(scoreInterval);
+    noLoop();
+    textSize(32);
+    fill(255, 0, 0);
+    textAlign(CENTER);
+    text("¡Game Over!", width / 2, height / 2);
+    text("¡Presiona R para reiniciar!", width / 2, (height / 2) + 40);
+}
+function resetGame() {
+    gameOverFlag = false;
+    player = new Player();
+    score = 0;
+    enemies = [];
+    enemyBullet = [];
+    initEnemies();
+    loop();
+}
 function keyPressed() {
     if (keyCode === LEFT_ARROW) {
         player.setDir(-1);
@@ -72,6 +107,8 @@ function keyPressed() {
         if (!bullet) {
             bullet = new Bullet(player.x, height - 40);
         }
+    } else if (key === 'r' && gameOverFlag) {
+        resetGame();
     }
 }
 

@@ -3,14 +3,21 @@ let player;
 let playerSpeed = 2;
 let bullet;
 let bulletSpeed = 3;
+let gameOverFlag = false;
+
+let playerImg, bulletImg, enemyImg;
 
 let enemies = [];
-let cols = 10;
-let rows = 4;
-let enemySpeed = 1;
+let enemyBullet = [];
+let cols = 8;
+let rows = 3;
+let enemySpeed = 0.5;
 
 function setup() {
   createCanvas(800, 600);
+  playerImg = loadImage('images/player.png');
+  bulletImg = loadImage('images/Ship1.png');
+  enemyImg = loadImage('images/enemy.png');
   player = new Player();
   initEnemies();
   scoreInterval = setInterval(() => {
@@ -21,11 +28,12 @@ function setup() {
 function draw() {
   background(0);
 
+  drawBullet();
   player.show();
   player.move();
 
-  drawBullet();
 
+  drawEnemyBullet();
   drawEnemy();
 
   detectCollision();
