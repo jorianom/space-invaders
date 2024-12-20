@@ -65,14 +65,14 @@ function gameOver() {
     // Detectar colisiones entre la nave y los enemigos
     for (let i = enemies.length - 1; i >= 0; i--) {
         let d = dist(player.x, height - 40, enemies[i].x, enemies[i].y);
-        if (d < 20 + enemies[i].r) { // Radio de la nave + radio del enemigo
+        if (d < 40 + enemies[i].r) { // Radio de la nave + radio del enemigo
             endGame();
         }
     }
     for (let i = enemyBullet.length - 1; i >= 0; i--) {
         let bullet = enemyBullet[i];
         let d = dist(player.x, height - 40, bullet.x, bullet.y);
-        if (d < 20) { // Radio de la nave (20 es un estimado, ajusta según el tamaño de tu nave)
+        if (d < 40) {
             console.log("Colisión con bala enemiga detectada!");
             endGame();
         }

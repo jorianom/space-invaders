@@ -2,7 +2,7 @@ class Enemy {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.r = 20;
+        this.r = 30;
         this.xdir = 1;
     }
 
@@ -11,6 +11,9 @@ class Enemy {
         // ellipse(this.x, this.y, this.r * 2);
         imageMode(CENTER);
         image(enemyImg, this.x, this.y, 60, 60);
+        noFill();
+        stroke(255, 0, 0);
+        ellipse(this.x, this.y, 60); // Radio 30
     }
 
     move() {

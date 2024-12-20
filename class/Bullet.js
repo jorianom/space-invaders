@@ -10,6 +10,9 @@ class Bullet {
         fill(255, 0, 0);
         rectMode(CENTER);
         rect(this.x, this.y, 5, 10);
+        noFill();
+        stroke(255, 0, 0);
+        ellipse(this.x, this.y, 10); // Radio 40
     }
 
     move() {
@@ -22,6 +25,6 @@ class Bullet {
 
     hits(enemy) {
         let d = dist(this.x, this.y, enemy.x, enemy.y);
-        return d < 20;
+        return d < 30;
     }
 }

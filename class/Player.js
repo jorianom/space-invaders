@@ -11,6 +11,9 @@ class Player {
         // rect(this.x, height - 40, 40, 20);
         imageMode(CENTER);
         image(playerImg, this.x, height - 60, 80, 60);
+        noFill();
+        stroke(255, 0, 0);
+        ellipse(player.x, height - 60, 80); // Radio 40
     }
 
     setDir(dir) {
